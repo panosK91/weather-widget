@@ -1,6 +1,7 @@
 <template>
   <div class="info-card">
-    <span class="value">{{ value }}</span>
+    <!-- <span class="value">{{ value }}</span> -->
+    <span class="value"  v-html="value"></span>
     <span class="label">{{ label }}</span>
   </div>
 </template>

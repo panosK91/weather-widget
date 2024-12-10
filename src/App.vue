@@ -52,20 +52,21 @@ export default {
 
     filteredWeatherData() {
       const result = Object.entries(this.getSelectedItem)
-  .filter(([key]) => this.getValuesToKeep.includes(key))
-  .reduce((obj, [key, value]) => {
-    if (typeof value === 'object' && value.value !== undefined && value.units !== undefined) {
-      // Combine the label and value + units
-      obj[key] = {
-        label: value.label,
-        value: `${value.value} ${value.units}`,
-      };
-    } else {
-      // Fallback if value doesn't have the expected structure
-      obj[key] = value;
-    }
-    return obj;
-  }, {});
+      .filter(([key]) => this.getValuesToKeep.includes(key))
+      .reduce((obj, [key, value]) => {
+        if (typeof value === 'object' && value.value !== undefined && value.units !== undefined) {
+          // Combine the label and value + units
+          const itemValue = value.label !=='Feels Like' && value.label !=='Wind Deg'? `${value.value} <span class='subscript'">${value.units}</span>` : `${value.value} ${value.units}`
+          obj[key] = {
+            label: value.label,
+            value: itemValue,
+          };
+        } else {
+          // Fallback if value doesn't have the expected structure
+          obj[key] = value;
+        }
+        return obj;
+      }, {});
       return result
     },
 
@@ -118,6 +119,11 @@ export default {
   max-width: calc(33.333% - 2rem);
   box-sizing: border-box;
   aspect-ratio: 2;
+}
+
+.subscript {
+  font-size: 0.7em;
+  vertical-align: baseline;
 }
 
 @media (max-width: 768px) {
